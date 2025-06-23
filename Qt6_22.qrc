@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>icon/add.png</file>
+        <file>icon/delete.png</file>
+        <file>icon/modify.png</file>
+        <file>icon/redo.png</file>
+        <file>icon/scan_.ico</file>
+        <file>icon/search.ico</file>
+        <file>icon/search3.ico</file>
+        <file>icon/undo.png</file>
+        <file>icon/view.png</file>
+    </qresource>
+</RCC>
