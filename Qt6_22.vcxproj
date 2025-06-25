@@ -93,16 +93,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="Qt6_22.qrc" />
+    <QtUic Include="PersonChange.ui" />
     <QtUic Include="Qt6_22.ui" />
     <QtMoc Include="Qt6_22.h" />
+    <ClCompile Include="PersonChange.cpp" />
     <ClCompile Include="Date.cpp" />
+    <ClCompile Include="UndoRedo.cpp" />
+    <ClCompile Include="View.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="PersonSet.cpp" />
     <ClCompile Include="Qt6_22.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="view.ui" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="UndoRedo.h" />
+    <QtMoc Include="PersonChange.h" />
     <ClInclude Include="Date.h" />
+    <QtMoc Include="View.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="PersonSet.h" />
   </ItemGroup>

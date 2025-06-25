@@ -1,4 +1,4 @@
-#include "Person.h"
+﻿#include "Person.h"
 
 Person::Person(void) {
 	this->id = "unknow";
@@ -29,7 +29,7 @@ void Person::operator()(string id, string name, string sex,
 	this->employeeNo = employeeNo;
 	this->department = department;
 	this->post = post;
-	this->salary = 0.0;
+	this->salary = salary;
 }
 
 bool operator !=(Person person1, Person person2) {
@@ -97,43 +97,43 @@ void Person::SetSalary(double Salary) {
 }
 
 
-string Person::GetId() {
+string Person::GetId() const{
     return this->id;
 }
 
-string Person::GetName() {
+string Person::GetName() const{
     return this->name;
 }
 
-string Person::GetSex() {
+string Person::GetSex() const{
     return this->sex;
 }
 
-string Person::GetPhoneNo() {
+string Person::GetPhoneNo() const{
     return this->phoneNo;
 }
 
-string Person::GetAddress() {
+string Person::GetAddress() const{
     return this->address;
 }
 
-Date Person::GetBirthday() {
+Date Person::GetBirthday() const{
     return this->birthday;
 }
 
-string Person::GetEmployeeNo() {
+string Person::GetEmployeeNo() const{
     return this->employeeNo;
 }
 
-string Person::GetDepartment() {
+string Person::GetDepartment() const{
     return this->department;
 }
 
-string Person::GetPost() {
+string Person::GetPost() const{
     return this->post;
 }
 
-double Person::GetSalary() {
+double Person::GetSalary() const{
     return this->salary;
 }
 

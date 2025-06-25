@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "date.h"
 
 class Person
@@ -38,16 +38,16 @@ public:
     void SetSalary(double Salary);
 
     // Property getting operations
-    string GetId();
-    string GetName();
-    string GetSex();
-    string GetPhoneNo();
-    string GetAddress();
-    Date GetBirthday();
-    string GetEmployeeNo();
-    string GetDepartment();
-    string GetPost();
-    double GetSalary();
+    string GetId() const;
+    string GetName() const;
+    string GetSex() const;
+    string GetPhoneNo() const;
+    string GetAddress() const;
+    Date GetBirthday() const;
+    string GetEmployeeNo() const;
+    string GetDepartment()const;
+    string GetPost() const;
+    double GetSalary() const;
 
     // Overloaded standard input operator>> and operator<< for I/O operations of Person object
     friend istream& operator >> (istream& in, Person& person);

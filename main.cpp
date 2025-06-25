@@ -1,4 +1,4 @@
-#include "Qt6_22.h"
+ï»¿#include "Qt6_22.h"
 #include <QtWidgets/QApplication>
 #include "personset.h"
 
@@ -8,9 +8,9 @@
 void  LoadLibToSet(PersonSet& Set)
 {
     if (Set.ReadFromFile(INFOLIBNAME))
-        qDebug() << "ÒÑ¾­·¢ÏÖ¿âÎÄ¼þ£¬²¢³É¹¦¶ÁÈë¡£";
+        qDebug() << "å·²ç»å‘çŽ°åº“æ–‡ä»¶ï¼Œå¹¶æˆåŠŸè¯»å…¥ã€‚";
     else
-        qDebug() << "Î´·¢ÏÖ¿âÎÄ¼þ»ò¿âÎÄ¼þÎª¿Õ¡£";
+        qDebug() << "æœªå‘çŽ°åº“æ–‡ä»¶æˆ–åº“æ–‡ä»¶ä¸ºç©ºã€‚";
 }
 
 int main(int argc, char *argv[])

@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "set": "cpp",
+    "deque": "cpp",
+    "list": "cpp",
+    "xstring": "cpp",
+    "stack": "cpp",
+    "xlocinfo": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp",
+    "xlocale": "cpp",
+    "initializer_list": "cpp",
+    "iterator": "cpp"
+  }
+}

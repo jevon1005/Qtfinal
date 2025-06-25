@@ -1,4 +1,4 @@
-#include "Date.h"
+﻿#include "Date.h"
 #include "time.h"
 
 Date::Date(void) {
@@ -52,9 +52,12 @@ Date& Date::operator()(int y, int m, int d) {
 }
 
 string Date::Format() {
-	string data;
-	data = to_string(year % 100) + "--" + to_string(month) + "--" + to_string(day);
-	return data;
+    string data;
+    string year_str = (year % 100 < 10 ? "0" : "") + to_string(year % 100);
+    string month_str = (month < 10 ? "0" : "") + to_string(month);
+    string day_str = (day < 10 ? "0" : "") + to_string(day);
+    data = year_str + "--" + month_str + "--" + day_str;
+    return data;
 }
 
 bool operator==(Date date1, Date date2) {

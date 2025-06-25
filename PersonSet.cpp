@@ -13,7 +13,7 @@ bool PersonSet::push_back(const Person& person) {
 	for (auto it = begin(); it != end(); it++)
 		if (person == *it)
 			return false;
-		else deque<Person>::push_back(person);
+	deque<Person>::push_back(person);
 	return	true;
 }
 
@@ -21,7 +21,7 @@ bool PersonSet::push_front(const Person& person) {
 	for (auto it = begin(); it != end(); it++)
 		if (person == *it)
 			return false;
-		else deque<Person>::push_front(person);
+	deque<Person>::push_front(person);
 	return	true;
 }
 

@@ -1,0 +1,19 @@
+{
+  "folders": [
+	{
+		"path": "../../../学习/计算机网络/实验/套接字"
+	},
+	{
+		"path": "../../../vscode/test/.vscode"
+	},
+	{
+		"path": "../../../vscode/test"
+	}
+],
+  "settings": {
+    "files.associations": {
+      "stdio.h": "c",
+      "vector": "cpp"
+    }
+  }
+}

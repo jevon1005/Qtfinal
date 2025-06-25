@@ -49,6 +49,15 @@
     <ClCompile Include="PersonSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonChange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UndoRedo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h">
@@ -60,5 +69,24 @@
     <ClInclude Include="PersonSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UndoRedo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="view.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="PersonChange.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="View.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PersonChange.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>
