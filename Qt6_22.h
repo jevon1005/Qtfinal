@@ -28,15 +28,18 @@ public:
     void findPersonInfo();
     void findSetting();
     void updateUndoRedoState();
-
-//public slots:
-//    void onDisplaySelectedPerson();
-//    void onDeletePersonAction();
-//    void onUpdatePersonAction(QString m_pID);//
-//    void onAddPersonAction();//
+    void onNewFile();
+    void onOpenFile();
+    void onCloseFile();
+    bool maybeSave();
+    void setModified(bool modified = true);
+    void  onSaveFile();
+    void closeEvent(QCloseEvent* event) override;
 public:
     PersonSet* m_pPersonSet;
     UndoRedo* m_undoRedo;
+    QString m_currentFileName;
+    bool m_isModified = false;
 private:
     Ui::Qt6_22Class ui;
     QAction* m_undoAction;

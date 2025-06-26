@@ -13,6 +13,8 @@
 #include "View.h"
 #include "PersonChange.h"
 #include <set>
+#include <QFileDialog>
+#include "QCloseEvent"
 
 Qt6_22::Qt6_22(PersonSet *set,QWidget *parent)
     : QMainWindow(parent)
@@ -85,8 +87,14 @@ void Qt6_22::statusBarSetting()
     QMenu* fileMenu = menuBar->addMenu("File");
     QAction* newAction = fileMenu->addAction("New");
     QAction* openAction = fileMenu->addAction("Open");
+    QAction* saveAction = fileMenu->addAction("Save"); // 新增保存
     fileMenu->addSeparator();
-    QAction* closeAction = fileMenu->addAction("close");
+    QAction* closeAction = fileMenu->addAction("Close");
+
+    connect(newAction, &QAction::triggered, this, &Qt6_22::onNewFile);
+    connect(openAction, &QAction::triggered, this, &Qt6_22::onOpenFile);
+    connect(saveAction, &QAction::triggered, this, &Qt6_22::onSaveFile); // 连接保存
+    connect(closeAction, &QAction::triggered, this, &Qt6_22::onCloseFile);
 }
 
 void Qt6_22::toolBarSetting()
@@ -292,6 +300,8 @@ void Qt6_22::onDeletePersonAction()
     if (ui.checkBoxFind->isChecked() && !ui.textFind->text().isEmpty()) {
         findPersonInfo();
     }
+
+    setModified(true); //删除后标记为已修改
 }
 
 void Qt6_22::onUpdatePersonAction()
@@ -317,7 +327,11 @@ void Qt6_22::onUpdatePersonAction()
         reply = QMessageBox::question(nullptr, "修改人员", "确定修改成员吗", QMessageBox::Yes | QMessageBox::No);
         if (reply == QMessageBox::No)
             return;
-        else onUpdatePersonAction(m_PID);
+        else 
+        {
+            onUpdatePersonAction(m_PID);
+            setModified(true);
+        }
     }
 }
 
@@ -382,6 +396,7 @@ void Qt6_22::onAddPersonAction()
         refreshTable();
         updateUndoRedoState(); 
     });
+    setModified(true);
 }
 
 void Qt6_22::findPersonInfo()
@@ -410,8 +425,91 @@ void Qt6_22::updateUndoRedoState()
     m_redoAction->setEnabled(!m_undoRedo->redoStack.empty());
 }
 
+void Qt6_22::onNewFile()
+{
+    if (!maybeSave()) return;
+
+    QString fileName = QFileDialog::getSaveFileName(this, "新建数据文件", "", "Data Files (*.dat);;All Files (*)");
+    if (fileName.isEmpty()) return;
+
+    m_pPersonSet->clear();
+    m_currentFileName = fileName;
+    m_pPersonSet->WriteToFile(m_currentFileName.toStdString().c_str());
+    refreshTable();
+    setModified(false);
+}
+
+void Qt6_22::onOpenFile()
+{
+    if (!maybeSave()) return;
+
+    QString fileName = QFileDialog::getOpenFileName(this, "打开数据文件", "", "Data Files (*.dat);;All Files (*)");
+    if (fileName.isEmpty()) return;
+
+    m_pPersonSet->clear();
+    m_pPersonSet->ReadFromFile(fileName.toStdString().c_str());
+    m_currentFileName = fileName;
+    refreshTable();
+    setModified(false);
+}
+
+void Qt6_22::onSaveFile()
+{
+    if (m_currentFileName.isEmpty()) {
+        QString fileName = QFileDialog::getSaveFileName(this, "保存数据文件", "", "Data Files (*.dat);;All Files (*)");
+        if (fileName.isEmpty()) return;
+        m_currentFileName = fileName;
+    }
+    m_pPersonSet->WriteToFile(m_currentFileName.toStdString().c_str());
+    setModified(false);
+    refreshTable();
+    QMessageBox::information(this, "保存", "保存成功！");
+}
+
+void Qt6_22::onCloseFile()
+{
+    if (!maybeSave()) return;
+
+    QApplication::quit();
+}
+
+bool Qt6_22::maybeSave()
+{
+    if (!m_isModified) return true;
+    auto ret = QMessageBox::warning(this, "保存更改", "文件已被修改，是否保存？",
+                                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    if (ret == QMessageBox::Yes) {
+        if (m_currentFileName.isEmpty()) {
+            QString fileName = QFileDialog::getSaveFileName(this, "保存数据文件", "", "Data Files (*.dat);;All Files (*)");
+            if (fileName.isEmpty()) return false;
+            m_currentFileName = fileName;
+        }
+        m_pPersonSet->WriteToFile(m_currentFileName.toStdString().c_str());
+        setModified(false);
+        return true;
+    } else if (ret == QMessageBox::No) {
+        return true;
+    }
+    return false;
+}
+
+void Qt6_22::setModified(bool modified)
+{
+    m_isModified = modified;
+}
+
+void Qt6_22::closeEvent(QCloseEvent* event)
+{
+    if (maybeSave()) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}
+
 Qt6_22::~Qt6_22()
 {}
 
 //排序，增删改查
 //排序，删，查看
+
