@@ -38,7 +38,6 @@ void PersonChange::setPersonInfo(Person* m_p) {
     ui->salary->setText(QString::number(m_p->GetSalary(),'f',2));
 }
 
-
 void PersonChange::GetPersonInfo() {
     if (!ui) return;
 

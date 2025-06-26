@@ -18,16 +18,15 @@ public:
     void toolBarSetting();
     void refreshTable();
     void sortPersonInfo();
-    void onRightClickShowMenu(QPoint);//
+    void onRightClickShowMenu(QPoint);
     void onDisplaySelectedPerson(QString m_pID);
     void onDisplaySelectedPerson();
     void onDeletePersonAction();
     void onUpdatePersonAction();
-    void onUpdatePersonAction(QString m_pID);//
+    void onUpdatePersonAction(QString m_pID);
     void onAddPersonAction();
     void findPersonInfo();
     void findSetting();
-    void addSetting();
     void updateUndoRedoState();
 
 //public slots:

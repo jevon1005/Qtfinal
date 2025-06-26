@@ -75,8 +75,7 @@ void Qt6_22::findSetting() {
             for (int i = 0; i < m_pPersonSet->size(); i++)
                 table->setRowHidden(i, false);
         }
-        });
-
+    });
 }
 
 void Qt6_22::statusBarSetting()
@@ -133,16 +132,13 @@ void Qt6_22::toolBarSetting()
     updateUndoRedoState();
 }
 
-void Qt6_22::addSetting() {
-
-    
-}
-
 void Qt6_22::refreshTable()
 {
     int len = m_pPersonSet->size();
     QTableWidget* table = ui.PersonTable;
+
     table->setSortingEnabled(false);
+
     table->setRowCount(len);
     for (int row = 0; row < len; row++)
     {
@@ -160,13 +156,16 @@ void Qt6_22::refreshTable()
         //table->setItem(row, 8, new QTableWidgetItem(QString::fromLocal8Bit(person.GetPost().c_str())));
         table->setItem(row, 4, new QTableWidgetItem(QString::number(person.GetSalary(), 'f', 2)));
     }
+
     table->setSortingEnabled(true);
+
 }
 
 void Qt6_22::sortPersonInfo()
 {
     QTableWidget* table = ui.PersonTable;
     table->setSortingEnabled(true);
+    refreshTable();
 }
 
 void Qt6_22::onRightClickShowMenu(QPoint pos)
@@ -256,11 +255,28 @@ void Qt6_22::onDeletePersonAction()
 
     operation op;
     op.type = 2; // 删除
-    std::set<int> rows;
-    for (auto item : selecteditems) rows.insert(item->row());
+    std::set<int> rows; // 存储内存中的真实序号
+
+    // 通过选中项的身份证号，查找内存中的序号
+    std::set<std::string> selectedIds;
+    for (auto item : selecteditems) {
+        int row = item->row();
+        QTableWidgetItem* idItem = table->item(row, 0);
+        if (idItem) {
+            selectedIds.insert(idItem->text().toStdString());
+        }
+    }
+
+    for (int i = 0; i < m_pPersonSet->size(); ++i) {
+        const Person& person = m_pPersonSet->at(i);
+        if (selectedIds.count(person.GetId()) > 0) {
+            rows.insert(i);
+        }
+    }
+
     // 逆序删除，防止下标错乱
     std::vector<int> sortedRows(rows.begin(), rows.end());
-    std::sort(sortedRows.rbegin(), std::rend(sortedRows));
+    std::sort(sortedRows.rbegin(), sortedRows.rend());
     for (int row : sortedRows) {
         Person person = m_pPersonSet->at(row);
         op.indexlist.push_front(row);
@@ -270,7 +286,12 @@ void Qt6_22::onDeletePersonAction()
     if (!op.indexlist.empty())
         m_undoRedo->recordOp(op);
     refreshTable();
-    updateUndoRedoState(); 
+    updateUndoRedoState();
+
+    // 检查是否执行过查找操作，若是则再次执行查找刷新表格
+    if (ui.checkBoxFind->isChecked() && !ui.textFind->text().isEmpty()) {
+        findPersonInfo();
+    }
 }
 
 void Qt6_22::onUpdatePersonAction()
