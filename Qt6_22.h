@@ -5,6 +5,8 @@
 #include "PersonSet.h"
 #include "UndoRedo.h"
 #include <QDebug>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 class Qt6_22 : public QMainWindow
 {
@@ -44,5 +46,7 @@ private:
     Ui::Qt6_22Class ui;
     QAction* m_undoAction;
     QAction* m_redoAction;
+    QMediaPlayer* m_backgroundMusic;
+    QAudioOutput* m_audioOutput;
 };
 

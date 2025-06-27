@@ -10,6 +10,47 @@ PersonChange::PersonChange(Person* set, QWidget* parent)
     setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
 
+    // 应用深色主题
+    this->setStyleSheet(R"(
+        QDialog, QWidget {
+            background-color: #232629;
+            color: #d3dae3;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            font-size: 15px;
+        }
+        QLabel {
+            color: #d3dae3;
+            font-weight: bold;
+        }
+        QLineEdit, QPlainTextEdit, QTextEdit, QDateEdit, QComboBox {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 4px;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+            padding: 4px;
+        }
+        QLineEdit:focus, QPlainTextEdit:focus, QTextEdit:focus, QDateEdit:focus, QComboBox:focus {
+            border: 2px solid #3d8ec9;
+        }
+        QPushButton {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background-color: #3d8ec9;
+            color: #fff;
+        }
+        QPushButton:pressed {
+            background-color: #2d5a8b;
+        }
+    )");
+
     changeSetting();
 }
 
@@ -20,6 +61,47 @@ PersonChange::PersonChange(PersonSet* set, QWidget* parent)
     m_pPersonSet = set;
     setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
+
+    // 应用深色主题
+    this->setStyleSheet(R"(
+        QDialog, QWidget {
+            background-color: #232629;
+            color: #d3dae3;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            font-size: 15px;
+        }
+        QLabel {
+            color: #d3dae3;
+            font-weight: bold;
+        }
+        QLineEdit, QPlainTextEdit, QTextEdit, QDateEdit, QComboBox {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 4px;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+            padding: 4px;
+        }
+        QLineEdit:focus, QPlainTextEdit:focus, QTextEdit:focus, QDateEdit:focus, QComboBox:focus {
+            border: 2px solid #3d8ec9;
+        }
+        QPushButton {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background-color: #3d8ec9;
+            color: #fff;
+        }
+        QPushButton:pressed {
+            background-color: #2d5a8b;
+        }
+    )");
 
     addSetting();
 }

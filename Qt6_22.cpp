@@ -24,10 +24,107 @@ Qt6_22::Qt6_22(PersonSet *set,QWidget *parent)
     m_undoRedo = new UndoRedo();
     m_undoRedo->set = m_pPersonSet;  //让UndoRedo操作主数据
 
-    personTableSetting();
+    personTableSetting();   
     statusBarSetting();
     toolBarSetting();
     refreshTable();
+
+    // 初始化背景音乐
+    m_backgroundMusic = new QMediaPlayer(this);
+    m_audioOutput = new QAudioOutput(this);
+    m_backgroundMusic->setAudioOutput(m_audioOutput);
+    m_backgroundMusic->setSource(QUrl::fromLocalFile("backgroundmusic.mp3"));
+    m_audioOutput->setVolume(0.3); // 设置音量为30%
+    m_backgroundMusic->setLoops(QMediaPlayer::Infinite); // 循环播放
+    m_backgroundMusic->play();
+
+    // 应用深色主题
+    this->setStyleSheet(R"(
+        QMainWindow, QWidget {
+            background-color: #232629;
+            color: #d3dae3;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            font-size: 15px;
+        }
+        QMenuBar {
+            background-color: #232629;
+            color: #d3dae3;
+        }
+        QMenuBar::item {
+            background: transparent;
+            color: #d3dae3;
+        }
+        QMenuBar::item:selected {
+            background: #31363b;
+        }
+        QMenu {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+        }
+        QMenu::item:selected {
+            background: #31363b;
+        }
+        QToolBar {
+            background: #232629;
+            border-bottom: 1px solid #444;
+        }
+        QStatusBar {
+            background: #232629;
+            color: #d3dae3;
+        }
+        QTableWidget {
+            background-color: #2b2b2b;
+            color: #d3dae3;
+            gridline-color: #444;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+            border: 1px solid #444;
+        }
+        QHeaderView::section {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            font-weight: bold;
+        }
+        QLineEdit, QPlainTextEdit, QTextEdit {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 4px;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+        }
+        QPushButton {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+        QPushButton:hover {
+            background-color: #3d8ec9;
+            color: #fff;
+        }
+        QCheckBox, QRadioButton {
+            color: #d3dae3;
+        }
+        QCheckBox::indicator, QRadioButton::indicator {
+            border: 1px solid #444;
+            background: #232629;
+        }
+        QCheckBox::indicator:checked, QRadioButton::indicator:checked {
+            background: #3d8ec9;
+            border: 1px solid #3d8ec9;
+        }
+    )");
+
+    //m_player = new QMediaPlayer(this);
+    //m_audioOutput = new QAudioOutput(this);
+    //m_player->setAudioOutput(m_audioOutput);
+    //m_player->setSource(QUrl::fromLocalFile("backgroundmusic.mp3")); // 音乐文件名
+    //m_audioOutput->setVolume(0.2); // 音量0~1之间
+    //m_player->play();
 }
 
 void Qt6_22::personTableSetting() {
@@ -108,12 +205,19 @@ void Qt6_22::toolBarSetting()
     m_undoAction = new QAction(QIcon(":/new/prefix1/icon/undo.png"), "undo", this);
     m_redoAction = new QAction(QIcon(":/new/prefix1/icon/redo.png"), "redo", this);
 
+    // 添加音乐控制按钮
+    QAction* musicToggleAction = new QAction("🎵 音乐", this);
+    musicToggleAction->setCheckable(true);
+    musicToggleAction->setChecked(true);
+
     ui.mainToolBar->addAction(addToolAction);
     ui.mainToolBar->addAction(deleteToolAction);
     ui.mainToolBar->addAction(viewToolAction);
     ui.mainToolBar->addAction(modifyToolAction);
     ui.mainToolBar->addAction(m_undoAction);
     ui.mainToolBar->addAction(m_redoAction);
+    ui.mainToolBar->addSeparator();
+    ui.mainToolBar->addAction(musicToggleAction);
 
     connect(addToolAction, &QAction::triggered, this, &Qt6_22::onAddPersonAction);
     connect(deleteToolAction, &QAction::triggered,this, &Qt6_22::onDeletePersonAction);
@@ -133,6 +237,17 @@ void Qt6_22::toolBarSetting()
         if (m_undoRedo->redoAction()) {
             refreshTable();
             updateUndoRedoState();
+        }
+    });
+
+    // 音乐控制连接
+    connect(musicToggleAction, &QAction::toggled, this, [=](bool checked) {
+        if (checked) {
+            m_backgroundMusic->play();
+            musicToggleAction->setText("🎵 音乐");
+        } else {
+            m_backgroundMusic->pause();
+            musicToggleAction->setText("🔇 音乐");
         }
     });
 

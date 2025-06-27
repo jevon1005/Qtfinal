@@ -5,6 +5,33 @@ View::View(Person* set, QWidget* parent)
 {
     ui.setupUi(this);
 
+    // 应用深色主题
+    this->setStyleSheet(R"(
+        QMainWindow, QWidget {
+            background-color: #232629;
+            color: #d3dae3;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            font-size: 15px;
+        }
+        QLabel {
+            color: #d3dae3;
+            font-weight: bold;
+        }
+        QLineEdit, QPlainTextEdit, QTextEdit {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 4px;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+            padding: 4px;
+        }
+        QLineEdit:read-only {
+            background-color: #2b2b2b;
+            color: #a0a0a0;
+        }
+    )");
+
     ui.ID->setText(QString::fromLocal8Bit(set->GetId()));
     ui.name->setText(QString::fromLocal8Bit(set->GetName()));
     ui.sex->setText(QString::fromLocal8Bit(set->GetSex()));

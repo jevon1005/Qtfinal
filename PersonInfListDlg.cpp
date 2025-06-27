@@ -5,6 +5,68 @@ PersonInfListDlg::PersonInfListDlg(PersonSet* set, QWidget* parent)
     :QMainWindow(parent){
     ui.setupUi(this);
     m_pPersonSet = set;
+
+    // 应用深色主题
+    this->setStyleSheet(R"(
+        QMainWindow, QWidget {
+            background-color: #232629;
+            color: #d3dae3;
+            font-family: 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+            font-size: 15px;
+        }
+        QMenuBar {
+            background-color: #232629;
+            color: #d3dae3;
+        }
+        QMenuBar::item {
+            background: transparent;
+            color: #d3dae3;
+        }
+        QMenuBar::item:selected {
+            background: #31363b;
+        }
+        QMenu {
+            background-color: #232629;
+            color: #d3dae3;
+            border: 1px solid #444;
+        }
+        QMenu::item:selected {
+            background: #31363b;
+        }
+        QToolBar {
+            background: #232629;
+            border-bottom: 1px solid #444;
+        }
+        QStatusBar {
+            background: #232629;
+            color: #d3dae3;
+        }
+        QTableWidget {
+            background-color: #2b2b2b;
+            color: #d3dae3;
+            gridline-color: #444;
+            selection-background-color: #3d8ec9;
+            selection-color: #fff;
+            border: 1px solid #444;
+        }
+        QHeaderView::section {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            font-weight: bold;
+        }
+        QPushButton {
+            background-color: #31363b;
+            color: #d3dae3;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 6px 12px;
+        }
+        QPushButton:hover {
+            background-color: #3d8ec9;
+            color: #fff;
+        }
+    )");
 }
 
 void PersonInfListDlg::personTableSetting() {
@@ -117,25 +179,6 @@ void PersonInfListDlg::onAddPersonAction()
 {
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 PersonInfListDlg::~PersonInfListDlg() {
 
